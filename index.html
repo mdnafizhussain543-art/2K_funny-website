@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Funny Enter Page</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      font-family: Arial, sans-serif;
+      background: radial-gradient(circle at top, #ffffff, #eef3ff 55%, #dbe7ff 100%);
+      overflow: hidden;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 460px;
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 28px;
+      padding: 32px 24px;
+      text-align: center;
+      box-shadow: 0 18px 50px rgba(31, 75, 155, 0.18);
+      position: relative;
+      z-index: 2;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 34px;
+      color: #111827;
+      line-height: 1.2;
+    }
+
+    .subtitle {
+      margin-top: 12px;
+      color: #5b6473;
+      font-size: 16px;
+    }
+
+    .button-wrap {
+      margin-top: 28px;
+    }
+
+    button {
+      border: none;
+      border-radius: 18px;
+      padding: 16px 28px;
+      font-size: 22px;
+      font-weight: 700;
+      color: white;
+      background: linear-gradient(135deg, #3b82f6, #7c3aed);
+      cursor: pointer;
+      width: 100%;
+      box-shadow: 0 12px 24px rgba(59, 130, 246, 0.25);
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    button:hover {
+      transform: translateY(-2px) scale(1.01);
+      box-shadow: 0 16px 30px rgba(59, 130, 246, 0.3);
+    }
+
+    .result {
+      margin-top: 28px;
+      display: none;
+      padding: 22px 18px;
+      border-radius: 22px;
+      background: linear-gradient(135deg, #fff1f2, #fef3c7);
+      color: #111;
+      font-size: 30px;
+      font-weight: 800;
+      line-height: 1.35;
+      animation: popIn 0.5s ease;
+      box-shadow: 0 10px 22px rgba(0, 0, 0, 0.08);
+    }
+
+    .small {
+      display: block;
+      margin-top: 12px;
+      font-size: 15px;
+      font-weight: 600;
+      color: #6b7280;
+    }
+
+    .emoji-burst {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .emoji {
+      position: absolute;
+      font-size: 28px;
+      animation: fall 2.8s linear forwards;
+      opacity: 0.95;
+    }
+
+    .shake {
+      animation: shake 0.4s ease;
+    }
+
+    @keyframes popIn {
+      0% {
+        opacity: 0;
+        transform: scale(0.85);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20% { transform: translateX(-7px); }
+      40% { transform: translateX(7px); }
+      60% { transform: translateX(-5px); }
+      80% { transform: translateX(5px); }
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(-40px) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(105vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    .footer-note {
+      margin-top: 16px;
+      font-size: 13px;
+      color: #7b8190;
+    }
+
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 28px;
+      }
+
+      .result {
+        font-size: 24px;
+      }
+
+      button {
+        font-size: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="emoji-burst" id="emojiBurst"></div>
+
+  <div class="card" id="mainCard">
+    <h1>Tap Enter for a Surprise 😏</h1>
+    <div class="subtitle">একবার চাপ দিলেই secret reveal হবে</div>
+
+    <div class="button-wrap">
+      <button id="enterBtn">ENTER</button>
+    </div>
+
+    <div class="result" id="resultBox">
+      কিরে সায়মা (Saima) পাগল 🤡
+      <span class="small">Caught in 4K 😹</span>
+    </div>
+
+    <div class="footer-note">fun prank page</div>
+  </div>
+
+  <script>
+    const enterBtn = document.getElementById("enterBtn");
+    const resultBox = document.getElementById("resultBox");
+    const emojiBurst = document.getElementById("emojiBurst");
+    const mainCard = document.getElementById("mainCard");
+
+    function createEmojiRain() {
+      const emojis = ["🤡", "😹", "🤣", "🎉", "😂"];
+      for (let i = 0; i < 24; i++) {
+        const span = document.createElement("span");
+        span.className = "emoji";
+        span.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+        span.style.left = Math.random() * 100 + "vw";
+        span.style.animationDelay = (Math.random() * 0.6) + "s";
+        span.style.fontSize = (24 + Math.random() * 18) + "px";
+        emojiBurst.appendChild(span);
+
+        setTimeout(() => {
+          span.remove();
+        }, 3200);
+      }
+    }
+
+    enterBtn.addEventListener("click", () => {
+      resultBox.style.display = "block";
+      mainCard.classList.remove("shake");
+      void mainCard.offsetWidth;
+      mainCard.classList.add("shake");
+      createEmojiRain();
+    });
+  </script>
+</body>
+    </html>
